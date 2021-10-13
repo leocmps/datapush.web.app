@@ -3,10 +3,10 @@
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
-          :src="require('../assets/logo.svg')"
           class="my-3"
           contain
           height="200"
+          :src="require('../assets/logo.svg')"
         />
       </v-col>
 
@@ -37,8 +37,8 @@
           <a
             v-for="(next, i) in whatsNext"
             :key="i"
-            :href="next.href"
             class="subheading mx-3"
+            :href="next.href"
             target="_blank"
           >
             {{ next.text }}
@@ -58,8 +58,8 @@
           <a
             v-for="(link, i) in importantLinks"
             :key="i"
-            :href="link.href"
             class="subheading mx-3"
+            :href="link.href"
             target="_blank"
           >
             {{ link.text }}
@@ -79,8 +79,8 @@
           <a
             v-for="(eco, i) in ecosystem"
             :key="i"
-            :href="eco.href"
             class="subheading mx-3"
+            :href="eco.href"
             target="_blank"
           >
             {{ eco.text }}

@@ -1,16 +1,19 @@
 {
+  "experimentalDecorators": true,
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
+    "target": "esnext",
+    "module": "commonjs",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "useUnknownInCatchVariables": false,
     "sourceMap": true,
+    "checkJs": false,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "types": [
       "webpack-env",

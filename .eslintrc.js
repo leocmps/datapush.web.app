@@ -18,6 +18,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     '@typescript-eslint/no-empty-interface': 'off',
     'vue/custom-event-name-casing': 'off',
     'vue/attributes-order': ['error', {
@@ -34,9 +35,13 @@ module.exports = {
   overrides: [
     {
       files: [
+        '*.ts', '*.tsx',
         '**/__tests__/*.{j,t}s?(x)',
         '**/tests/unit/**/*.spec.{j,t}s?(x)'
       ],
+      'rules': {
+        '@typescript-eslint/explicit-module-boundary-types': ['error']
+      },
       env: {
         jest: true
       }

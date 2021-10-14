@@ -1,56 +1,88 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
+  <v-app style="background: #05386B">
+    <v-navigation-drawer
+      v-if="!isLoginRoute"
+      absolute
+      expand-on-hover
+      permanent
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+      <v-list>
+        <v-list-item
+          link
+          to="/"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-account-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Leonardo Campos</v-list-item-title>
+        </v-list-item>
+      </v-list>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-divider />
 
-      <v-spacer />
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
+      <v-list nav>
+        <v-list-item
+          link
+          to="/dashboard"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-monitor-dashboard</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Dashboard</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/account-details"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-account-details</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Detalhes da Conta</v-list-item-title>
+        </v-list-item>
+      </v-list>
+      <template v-slot:append>
+        <v-list nav>
+          <v-list-item
+            link
+            to="/sign-in"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-logout-variant</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Sair</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </template>
+    </v-navigation-drawer>
+    <v-main :class="mainMargin">
       <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default Vue.extend({
-  name: 'App',
+@Component
+export default class App extends Vue {
+  mounted () {
+    (this as any).$firebase.auth().onAuthStateChanged((user: any) => {
+      (window as any).uid = user ? user.uid : null
+      this.$router.push({ name: (window as any).uid ? 'Home' : 'SignIn' })
+    })
+  }
 
-  data: () => ({
-    //
-  })
-})
+  get isLoginRoute () {
+    return this.$route.name === 'SignIn' || this.$route.name === 'SignUp' || this.$route.name === 'PasswordRecovery'
+  }
+
+  get mainMargin () {
+    return this.$route.name === 'SignIn' || this.$route.name === 'SignUp' || this.$route.name === 'PasswordRecovery' ? '' : 'ml-16'
+  }
+}
 </script>
+<style scoped>
+.full-height {
+  height: 100%
+}
+</style>

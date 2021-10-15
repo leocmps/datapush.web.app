@@ -50,7 +50,7 @@
           width="370"
           @click="login"
         >
-          Sign in
+          Entrar
         </v-btn>
       </v-card-text>
     </v-card>

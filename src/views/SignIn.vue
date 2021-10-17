@@ -15,8 +15,11 @@
           <div>Novo aqui?</div>
           <a
             class="ml-1"
+            style="color: #514A9D !important"
             @click="goTo('/sign-up')"
-          >Criar uma conta</a>
+          >
+            Criar uma conta
+          </a>
         </div>
       </v-card-title>
       <v-card-text>
@@ -31,7 +34,10 @@
           />
           <div class="d-flex justify-space-between mb-2">
             <div>Senha</div>
-            <a @click="goTo('/password-recovery')">
+            <a
+              style="color: #514A9D !important"
+              @click="goTo('/password-recovery')"
+            >
               Esqueceu a senha?
             </a>
           </div>
@@ -44,10 +50,11 @@
         </v-form>
         <v-btn
           class="white--text"
-          color="#05386B"
+          color="#514A9D"
+          :disabled="!hasEmailAndPassword"
           height="50"
           :loading="inProgress"
-          width="370"
+          width="368"
           @click="login"
         >
           Entrar
@@ -67,22 +74,40 @@ export default class SignIn extends Vue {
   formValid = false
   inProgress = false
 
+  created () {
+    window.addEventListener('keyup', this.keyUpHandler)
+  }
+
+  destroyed () {
+    window.removeEventListener('keyup', this.keyUpHandler)
+  }
+
+  async keyUpHandler (event: KeyboardEvent) {
+    if (event.code === 'Enter') await this.login()
+  }
+
   goTo (route: string) {
     this.$router.push(route)
   }
 
   async login () {
+    if (!this.hasEmailAndPassword) return
     const { email, password } = this
     try {
       this.inProgress = true
       const res = await (this as any).$firebase.auth().signInWithEmailAndPassword(email, password);
-      (window as any).uid = res.user.uid
+      (window as any).uid = res.user.uid;
+      (window as any).displayName = res.user.displayName
       this.$router.push({ name: 'Home' })
     } catch (err) {
       alert(err)
     } finally {
       this.inProgress = false
     }
+  }
+
+  get hasEmailAndPassword () {
+    return !!this.email && !!this.password
   }
 }
 </script>

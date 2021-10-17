@@ -1,8 +1,10 @@
 <template>
-  <v-app style="background: #05386B">
+  <v-app class="bg">
     <v-navigation-drawer
       v-if="!isLoginRoute"
       absolute
+      color="#006ABA"
+      dark
       expand-on-hover
       permanent
     >
@@ -12,7 +14,7 @@
           to="/"
         >
           <v-list-item-icon>
-            <v-icon>mdi-account-multiple</v-icon>
+            <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Leonardo Campos</v-list-item-title>
         </v-list-item>
@@ -44,7 +46,7 @@
         <v-list nav>
           <v-list-item
             link
-            to="/sign-in"
+            @click="signOut"
           >
             <v-list-item-icon>
               <v-icon>mdi-logout-variant</v-icon>
@@ -72,6 +74,16 @@ export default class App extends Vue {
     })
   }
 
+  async signOut () {
+    try {
+      await (this as any).$firebase.auth().signOut();
+      (window as any).uid = null
+      this.$router.push({ name: 'SignIn' })
+    } catch (err) {
+      alert(err)
+    }
+  }
+
   get isLoginRoute () {
     return this.$route.name === 'SignIn' || this.$route.name === 'SignUp' || this.$route.name === 'PasswordRecovery'
   }
@@ -81,8 +93,18 @@ export default class App extends Vue {
   }
 }
 </script>
-<style scoped>
+<style>
 .full-height {
   height: 100%
+}
+
+.bg {
+  background: #24C6DC !important;
+  background: -webkit-linear-gradient(to right, #514A9D, #24C6DC) !important;
+  background: linear-gradient(to right, #514A9D, #24C6DC) !important;
+}
+
+.v-application a {
+  color: #514A9D;
 }
 </style>

@@ -16,7 +16,7 @@
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Leonardo Campos</v-list-item-title>
+          <v-list-item-title>{{ $firebase.auth().currentUser.displayName }}</v-list-item-title>
         </v-list-item>
       </v-list>
 
@@ -32,7 +32,7 @@
           </v-list-item-icon>
           <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
-        <v-list-item
+        <!-- <v-list-item
           link
           to="/account-details"
         >
@@ -40,7 +40,7 @@
             <v-icon>mdi-account-details</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Detalhes da Conta</v-list-item-title>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
       <template v-slot:append>
         <v-list nav>

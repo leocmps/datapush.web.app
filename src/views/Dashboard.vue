@@ -12,7 +12,7 @@
     </div>
     <div
       class="grid"
-      :style="{gridTemplateRows: templateRows}"
+      :style="{gridTemplateRows: templateRows, rowGap: '16px'}"
     >
       <v-card
         v-for="(company, index) in companies"
@@ -56,74 +56,12 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Dashboard extends Vue {
-  companies = [
-    {
-      companyName: 'BCO BRASIL S.A.',
-      issuer: 'BBAS',
-      tradingName: 'BRASIL',
-      segment: 'Bancos',
-      codeCvm: '1023'
-    },
-    {
-      companyName: 'ALPARGATAS S.A.',
-      issuer: 'ALPA',
-      tradingName: 'ALPARGATAS',
-      segment: 'Calçados',
-      codeCvm: '10456'
-    },
-    {
-      companyName: 'SARAIVA LIVREIROS S.A. - EM RECUPERAÇÃO JUDICIAL',
-      issuer: 'SLED',
-      tradingName: 'SARAIVA LIVR',
-      segment: 'Produtos Diversos',
-      codeCvm: '10472'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    },
-    {
-      companyName: 'SONDOTECNICA ENGENHARIA SOLOS S.A.',
-      issuer: 'SOND',
-      tradingName: 'SONDOTECNICA',
-      segment: 'Engenharia Consultiva',
-      codeCvm: '10880'
-    }
-  ]
-
   created () {
-    this.$store.commit('setCompanies', this.companies)
+    this.$store.dispatch('getCompanies')
+  }
+
+  get companies () {
+    return this.$store.state.companies || []
   }
 
   get templateRows () {

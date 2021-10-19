@@ -14,10 +14,10 @@
       comunicados, entre outras informações importantes de empresas listadas na
       B3.
     </div>
-    <div class="text-subtitle-2 white--text mb-2">
+    <div class="text-subtitle-1 white--text mb-2">
       Desenvolvedores
     </div>
-    <div class="text-caption white--text d-flex">
+    <div class="text-subtitle-2 white--text d-flex">
       <div class="px-2 d-flex flex-column text-center">
         Eliandro Freitas
         <div>190870</div>

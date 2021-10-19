@@ -96,8 +96,7 @@ export default class SignIn extends Vue {
     try {
       this.inProgress = true
       const res = await (this as any).$firebase.auth().signInWithEmailAndPassword(email, password);
-      (window as any).uid = res.user.uid;
-      (window as any).displayName = res.user.displayName
+      (window as any).uid = res.user.uid
       this.$router.push({ name: 'Home' })
     } catch (err) {
       alert(err)

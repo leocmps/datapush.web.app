@@ -9,10 +9,7 @@
       permanent
     >
       <v-list>
-        <v-list-item
-          link
-          to="/"
-        >
+        <v-list-item>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
@@ -25,12 +22,30 @@
       <v-list nav>
         <v-list-item
           link
+          to="/"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          link
           to="/dashboard"
         >
           <v-list-item-icon>
-            <v-icon>mdi-monitor-dashboard</v-icon>
+            <v-icon>mdi-office-building</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Dashboard</v-list-item-title>
+          <v-list-item-title>Empresas</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/dashboard-cvm"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-view-dashboard-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Código CVM</v-list-item-title>
         </v-list-item>
         <!-- <v-list-item
           link
@@ -94,6 +109,15 @@ export default class App extends Vue {
 }
 </script>
 <style>
+
+html {
+  overflow: hidden !important;
+}
+
+.scroller {
+  overflow: auto !important
+}
+
 .full-height {
   height: 100%
 }
@@ -106,5 +130,24 @@ export default class App extends Vue {
 
 .v-application a {
   color: #514A9D;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
 }
 </style>

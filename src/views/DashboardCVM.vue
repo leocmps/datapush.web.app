@@ -1,22 +1,9 @@
 <template>
   <div>
-    <div class="full-screen mt-4">
-      <v-text-field
-        v-model="filterByname"
-        v-debounce:500ms="getCompaniesFilteredByName"
-        append-icon="mdi-magnify"
-        background-color="white"
-        class="mr-1"
-        filled
-        label="Pesquisar empresa"
-        rounded
-        style="max-width: 600px"
-      />
-    </div>
     <div
       v-if="inProgress"
       class="d-flex align-center justify-center"
-      style="height: 80vh"
+      style="height: 90vh"
     >
       <v-progress-circular
         color="white"
@@ -25,26 +12,61 @@
         width="10"
       />
     </div>
-    <div
-      v-else
-      class="scroller"
-      style="max-height: 850px"
-    >
+    <div v-else>
+      <div class="full-screen">
+        <v-text-field
+          v-model="filterByCVM"
+          background-color="white"
+          class="mr-3 mt-16"
+          filled
+          label="Pesquisar CVM"
+          rounded
+          style="max-width: 300px;"
+        />
+        <v-btn
+          class="white--text mt-8"
+          color="#514A9D"
+          @click="getCompaniesFilteredByCVM"
+        >
+          Buscar
+          <v-icon
+            class="ml-2"
+            size="16"
+          >
+            mdi-magnify
+          </v-icon>
+        </v-btn>
+      </div>
       <div
-        class="grid"
-        :style="{gridTemplateRows: templateRows, rowGap: '16px'}"
+        v-if="showNoCompanyFoundMessage"
+        class="d-flex flex-column align-center"
+        style="width: 100%; margin-top: 260px"
+      >
+        <img
+          src="../assets/company.png"
+          width="100"
+        >
+        <div class="text-subtitle-1 white--text">
+          Nenhum empresa encontada.
+        </div>
+        <div class="text-subtitle-2 white--text">
+          Insira um código válido para encontar uma empresa.
+        </div>
+      </div>
+      <div
+        v-else
+        class="full-screen"
+        style="margin-top: 200px"
       >
         <v-card
-          v-for="(company, index) in companies"
-          :key="index"
+          v-if="company"
           class="mx-2"
           height="200"
           min-width="400"
           width="400"
         >
           <v-card-text>
-            <div>{{ company.segment }}</div>
-            <p class="text-h6 text--primary text-truncate">
+            <p class="text-h6 text--primary text-truncate text-center">
               {{ company.companyName }}
             </p>
             <div class="d-flex">
@@ -52,6 +74,12 @@
                 CNPJ:
               </div>
               {{ cnpjFormatter(company.cnpj) }}
+            </div>
+            <div class="d-flex">
+              <div class="mr-2 font-weight-bold">
+                Segmento:
+              </div>
+              {{ company.segment }}
             </div>
             <div class="d-flex">
               <div class="mr-2 font-weight-bold">
@@ -82,14 +110,16 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Dashboard extends Vue {
-  filterByname = ''
+export default class DashboardCVM extends Vue {
+  filterByCVM = ''
   inProgress = false
 
-  async created () {
+  async getCompaniesFilteredByCVM () {
     try {
       this.inProgress = true
-      await this.$store.dispatch('getCompanies')
+      if (this.filterByCVM) await this.$store.dispatch('getCompaniesByCode', this.filterByCVM)
+    } catch (err) {
+      alert(err)
     } finally {
       this.inProgress = false
     }
@@ -100,23 +130,12 @@ export default class Dashboard extends Vue {
     return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')
   }
 
-  async getCompaniesFilteredByName () {
-    try {
-      this.inProgress = true
-      if (this.filterByname) await this.$store.dispatch('getCompaniesFiltered', this.filterByname)
-      else await this.$store.dispatch('getCompanies')
-    } finally {
-      this.inProgress = false
-    }
+  get company () {
+    return this.$store.state.company
   }
 
-  get companies () {
-    return this.$store.state.companies || []
-  }
-
-  get templateRows () {
-    const rows = this.companies.length / 4
-    return `repeat(${rows}, 1fr`
+  get showNoCompanyFoundMessage () {
+    return !this.inProgress && !this.company
   }
 }
 </script>

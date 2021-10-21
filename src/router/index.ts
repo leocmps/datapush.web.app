@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
+import DashboardCVM from '../views/DashboardCVM.vue'
 import AccountDetails from '../views/AccountDetails.vue'
 import SignIn from '../views/SignIn.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
@@ -39,6 +40,12 @@ const routes: Array<RouteConfig> = [
     name: 'Dashboard',
     meta: { title: 'DataPush - Dashboard' },
     component: Dashboard
+  },
+  {
+    path: '/dashboard-cvm',
+    name: 'DashboardCVM',
+    meta: { title: 'DataPush - Dashboard CVM' },
+    component: DashboardCVM
   },
   {
     path: '/account-details',
